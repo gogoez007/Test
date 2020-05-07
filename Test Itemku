@@ -1,0 +1,26 @@
+function solution(record) {
+    var answer = [];
+    var user={};
+    for ( i=0; i<record.length; i++) {
+			splitRecord = record[i].split(" ");
+			if (splitRecord[0] == 'Enter' ||  splitRecord[0] == 'Change'){
+            user[splitRecord[1]] = splitRecord[2]
+       }
+			
+		}
+    
+		for ( i=0; i<record.length; i++) {
+			splitRecord = record[i].split(" ");
+  			switch (splitRecord[0]) {
+    			case "Enter" :
+    				answer.push(user[splitRecord[1]]+" came in."); break;
+    			case "Leave" :
+    				answer.push(user[splitRecord[1]]+" left."); break;
+  			}
+    }
+    return answer;
+}
+console.log(
+solution(["Enter uid1234 Muzi", "Enter uid4567 Prodo", "Leave uid1234", "Enter uid1234 Prodo", "Change uid4567 Ryan"]
+)
+);
