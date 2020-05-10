@@ -1,0 +1,38 @@
+function solution(N, users) {
+    var temp_rate={};
+    var rate_success=users.length;
+    var answer = [];
+    for(i=1;i<=N;i++){
+    var rate_fail=0;
+      for(j=0;j<users.length;j++){
+        if(i==users[j]){
+          rate_fail=rate_fail+1;
+          temp_rate[i]=rate_fail/rate_success;
+        }else if(users[j]>N){
+          temp_rate[i]=rate_fail/rate_success;
+        }
+      }
+      rate_success=rate_success-rate_fail;
+    }
+    var sortable = [];
+    for (var stage in temp_rate) {
+        sortable.push([stage, temp_rate[stage]]);
+    }
+    if(sortable.length<N){
+      for(i=1;i<N;i++){
+        if(sortable[i] !== users[i]){
+          sortable.push(i.toString());
+        }
+      }
+        
+    }
+    sortable.sort(function(a, b) {
+        return b[1] - a[1];
+    });
+    sortable.forEach(function(item){
+        answer.push(item[0])
+    })
+    return answer;
+}
+console.log(solution(5,[2,1,2,6,2,4,3,3]));
+console.log(solution(4,[4,4,4,4,4]));
