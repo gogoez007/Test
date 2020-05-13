@@ -1,65 +1,44 @@
 function solution(relation) {
-        var answer = 0; 
-        important=[];
-        row = relation.length;
-        column = relation[0].length;
-        answer = 0;
-        cnt = relation[0].length;
-        arr = [];
-        for (i = 1; i <= cnt; i++) {
-            combination(arr, 0, cnt, i, 0, row, column, relation);
-        }
-        answer = important.length-1;
-    return answer;
-}
-function combination( arr,index,n,r,target,row,column,relation){
-if (r == 0)
-            print(arr, index, row, column, relation);
-        else if (target == n)
-            return;
-        else {
-            arr[index] = target;
-            combination(arr, index + 1, n, r - 1, target + 1, row, column, relation);
-            combination(arr, index, n, r, target + 1, row, column, relation);
-        }
-}
-function print(arr,length,row,column,relation){
-        arrayList = [];
-        qq = "";
-        uu = "";
-        for (i = 0; i < length; i++) {
-            qq += arr[i];
-        }
-        for (i = 0; i < important.length; i++) {
-            uu=important[i];
-            if (uu.includes(qq)) {
-                return;
-            }
-        }
-        for ( i = 0; i < row; i++) {
-            temp = "";
-            for (q = 0; q < length; q++) {
-                temp += relation[i][arr[q]];
-            }
-            arrayList.push(temp);
-        }
-        flag = false;
-        for (i = 0; i < arrayList.length - 1; i++) {
-            base = arrayList[i];
-            for (j = i + 1; j < arrayList.length; j++) {
-                compare = arrayList[j];
-                if (base==compare) {
-                    flag = true;
-                    break;
+    var answer = 0;
+    answer_list={}
+    t=1<<relation[0].length
+    for(i=1;i<=t;i++){
+        tmp_set = []
+        tmp_set1=[]
+        for(j=0;j<=relation.length;j++){
+            tmp = ''
+            for(k=0;k<=relation[0].length;k++){
+                if ((i & (1 << k)) && relation[j] != undefined){
+                    tmp += relation[j][k]
                 }
             }
+            tmp_set1.push(tmp)
+              
+        } 
+        set={}
+        for(b=0;b<=tmp_set1.length-1;b++){
+          set[tmp_set1[b]]=true
         }
-        if (flag) {
-            important.push(qq);
-        } else {
+        for(item in set){
+          if(item!='')
+            tmp_set.push(item)
         }
-        return important;
+        if (tmp_set.length == relation.length){
+            not_duplicate = true
+            for (num in answer_list){
+                if ((num & i) == num){
+                    not_duplicate = false
+                    break
+                }
+            }
+            if (not_duplicate){
+                answer_list[i]=i;
+                answer +=1;
+            }
+
+
+        }
+    }
+    return answer;
 }
-console.log(solution(
-[['100','ryan','music','2'],['200','apeach','math','2'],['300','tube','computer','3'],['400','con','computer','4'],['500','muzi','music','3'],['600','apeach','music','2']]
-))
+console.log(solution([["100","ryan","music","2"],["200","apeach","math","2"],["300","tube","computer","3"],["400","con","computer","4"],["500","muzi","music","3"],["600","apeach","music","2"]]))
